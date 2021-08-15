@@ -13,8 +13,6 @@ class FriendList(models.Model):
 	user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="user")
 	friends	= models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name="friends") 
 
-	# set up the reverse relation to GenericForeignKey
-
 	def __str__(self):
 		return self.user.username
 
@@ -51,20 +49,11 @@ class FriendList(models.Model):
 
 
 class FriendRequest(models.Model):
-	"""
-	A friend request consists of two main parts:
-		1. SENDER
-			- Person sending/initiating the friend request
-		2. RECIVER
-			- Person receiving the friend friend
-	"""
-
-	sender 				= models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="sender")
-	receiver 			= models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="receiver")
-
-	is_active			= models.BooleanField(blank=False, null=False, default=True)
-
-	timestamp 			= models.DateTimeField(auto_now_add=True)
+	
+	sender 	= models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="sender")
+	receiver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="receiver")
+        is_active = models.BooleanField(blank=False, null=False, default=True)
+        timestamp = models.DateTimeField(auto_now_add=True)
 
 	def __str__(self):
 		return self.sender.username
